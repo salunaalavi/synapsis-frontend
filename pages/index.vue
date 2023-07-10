@@ -12,7 +12,11 @@
 <script setup>
 const posts = usePostsStore();
 
+useServerSeoMeta({
+  title: "All Posts",
+});
+
 useHead({
-  title: "Blog Posts",
+  title: "All Posts",
 });
 </script>

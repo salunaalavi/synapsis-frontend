@@ -44,4 +44,10 @@ onMounted(() => {
   comments.resetPagination();
   comments.getCommentsByPostId(route.params.id);
 });
+
+useSeoMeta({
+  title: () => `${posts.datum?.title ? posts.datum?.title : 'Post'} - by ${users.datum?.name ? users.datum?.name : 'Username'}`,
+  description: () => `${posts.datum?.body}`,
+  ogDescription: () => `${posts.datum?.body}`,
+});
 </script>
