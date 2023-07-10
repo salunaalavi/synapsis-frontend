@@ -72,4 +72,12 @@ async function searchUser(value) {
 onBeforeRouteLeave(() => {
   users.onEdit = false;
 });
+
+useServerSeoMeta({
+  title: "All Users",
+});
+
+useHead({
+  title: "All Users",
+});
 </script>
