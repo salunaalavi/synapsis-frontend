@@ -1,18 +1,27 @@
 <template>
-  <article class="bg-slate-400 mb-4">
+  <article class="post-card">
     <nuxt-link
       v-if="hyperlinked"
-      class=""
       :to="{ name: 'post-id', params: { id: post.id } }"
     >
-      {{ post.title }}
+      <h3 class="post-card__header">
+        {{ post.title }}
+      </h3>
     </nuxt-link>
-    <p v-else>
+    <h3 v-else class="post-card__header">
       {{ post.title }}
-    </p>
-    <p>
+    </h3>
+    <p class="post-card__body">
       {{ post.body }}
     </p>
+    <section v-if="user" class="post-card__footer">
+      <p>
+        by: {{ user.name }}
+      </p>
+      <p>
+        email: <a :href="`mailto:${user.email}`">{{ user.email }}</a>
+      </p>
+    </section>
   </article>
 </template>
 <script setup>
@@ -25,5 +34,9 @@ defineProps({
     type: Boolean,
     default: false,
   },
+  user: {
+    type: Object,
+    default: null,
+  }
 });
 </script>

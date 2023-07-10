@@ -1,5 +1,5 @@
 <template>
-  <button>
+  <button :class="color">
     <Icon :name="name" :size="size" />
   </button>
 </template>
@@ -12,6 +12,48 @@ defineProps({
   size: {
     type: String,
     default: "20",
-  }
+  },
+  color: {
+    type: String,
+    default: "primary",
+  },
 })
 </script>
+<style scoped lang="scss">
+@import "../../assets/scss/libs/_variables";
+@import "../../assets/scss/libs/_mixins";
+
+button {
+  padding: $spacer-1 $spacer-2;
+  border-radius: $spacer-1;
+  &.primary {
+    color: $primary;
+    &:hover {
+      background-color: $tertiary;
+    }
+  }
+  &.secondary {
+    background-color: $secondary;
+    color: white;
+    &:hover {
+      background-color: $primary;
+    }
+  }
+  &.tertiary {
+    background-color: $tertiary;
+    color: $secondary;
+    &:hover {
+      background-color: $secondary;
+      color: white;
+    }
+  }
+  &.error {
+    background-color: $tertiary;
+    color: red;
+    &:hover {
+      background-color: red;
+      color: white;
+    }
+  }
+}
+</style>

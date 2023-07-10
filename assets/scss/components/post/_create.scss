@@ -1,0 +1,11 @@
+.post-create {
+  display: flex;
+  flex-direction: column;
+  gap: $spacer-2;
+  margin-bottom: $spacer-2;
+
+  &__multi {
+    display: flex;
+    gap: $spacer-2;
+  }
+}

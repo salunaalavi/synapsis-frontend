@@ -1,13 +1,18 @@
 $primary: #a0c49d;
 $secondary: #3aa6b9;
-$tertiary: #e1ecc8;
+$tertiary: #eceef0;
+$dark: #565656;
 
-$spacer-1: 1rem;
-$spacer-2: 2rem;
-$spacer-3: 3rem;
+$spacer-1: calc(2px + 0.390625vw);
+$spacer-2: calc(5px + 0.390625vw);
+$spacer-3: calc(12px + 0.390625vw);
+$spacer-4: calc(24px + 0.390625vw);
+$spacer-5: calc(48px + 0.390625vw);
+$spacer-6: calc(92px + 0.390625vw);
 
 $rounded: 999999px;
 
-$light: 500;
-$regular: 600;
-$bold: 700;
+$light: 400;
+$regular: 500;
+$bold: 600;
+$bolder: 700;

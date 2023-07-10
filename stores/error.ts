@@ -1,12 +1,19 @@
 export const useErrorStore = defineStore("error", () => {
-  const data = ref(null);
+  const error = ref(null);
+  const success = ref(false);
 
   function setError(value: any) {
-    data.value = value;
+    error.value = value;
+  }
+
+  function setSuccess(value: any) {
+    success.value = value;
   }
 
   return {
-    data,
+    error,
+    success,
     setError,
+    setSuccess,
   }
 })

@@ -1,16 +1,18 @@
 <template>
-  <article class="bg-slate-400 mb-4">
-    <div class="flex gap-2">
-      <p>
+  <article class="comment-card">
+    <section class="comment-card__header">
+      <h3>
         {{ comment.name }}
-      </p>
-      <p>
+      </h3>
+      <a :href="`mailto:${comment.email}`">
         {{ comment.email }}
+      </a>
+    </section>
+    <section class="comment-card__body">
+      <p>
+        {{ comment.body }}
       </p>
-    </div>
-    <p>
-      {{ comment.body }}
-    </p>
+    </section>
   </article>
 </template>
 <script setup>

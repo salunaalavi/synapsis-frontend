@@ -1,0 +1,62 @@
+.user-card {
+  border: 1px solid $primary;
+  margin-bottom: $spacer-2;
+  border-radius: $spacer-2;
+  text-align: justify;
+  background-color: $primary;
+  padding: $spacer-1;
+
+  &__profile {
+    display: flex;
+    gap: $spacer-2;
+    flex-direction: column;
+
+    &--data {
+      display: flex;
+      gap: $spacer-2;
+
+      &-hero {
+        & a:hover {
+          @include link-tertiary;
+        }
+      }
+
+      &-action {
+        display: flex;
+        gap: $spacer-2;
+        place-content: flex-end;
+      }
+    }
+
+    h3 {
+      font-weight: $bolder;
+    }
+  }
+
+  @media screen and (max-width: 768px) {
+    .user-card {
+      &__profile {
+        &--data {
+          img {
+            width: 75px;
+            height: 75px;
+          }
+          &-hero {
+            * {
+              word-break: break-all;
+            }
+          }
+        }
+      }
+  
+      &__aside {
+        position: unset;
+        display: flex;
+        flex-direction: column;
+        gap: $spacer-2;
+        left: unset;
+        width: 100%;
+      }
+    }
+  }
+}

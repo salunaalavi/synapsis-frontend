@@ -1,5 +1,5 @@
 <template>
-  <div class="flex flex-col w-full mb-2" :class="[`${xClass}`]">
+  <div class="flex flex-col mb-2" :class="[`${customClass}`]">
     <label class="mb-2">
       {{ label }}
       <span v-if="required" style="color: red"> * </span>
@@ -7,14 +7,11 @@
     <input
       :class="{
         warning: showValidation,
-        'opacity-50 cursor-not-allowed': disabled,
       }"
       :type="type"
       :value="viewValue"
       :placeholder="placeholder"
-      :disabled="disabled"
       @input="validateField($event)"
-      @keypress="ruler($event)"
     />
     <p v-if="showValidation" class="pt-2 text-red-500">
       {{ errorMessage }}
@@ -40,20 +37,8 @@ const props = defineProps({
     type: String,
     default: "",
   },
-  parser: {
-    type: Function,
-    default: null,
-  },
-  invertedParser: {
-    type: Function,
-    default: null,
-  },
   validator: {
     type: [RegExp, null, Array],
-    default: null,
-  },
-  rule: {
-    type: [RegExp, null],
     default: null,
   },
   type: {
@@ -68,11 +53,7 @@ const props = defineProps({
     type: Boolean,
     default: false,
   },
-  disabled: {
-    type: Boolean,
-    default: false,
-  },
-  xClass: {
+  customClass: {
     type: String,
     default: "",
   },
@@ -86,34 +67,9 @@ const viewValue = computed(() => {
   return props.value;
 });
 
-function emitNewVal(val) {
-  const parsedValue = props.parser ? props.parser(val) : val;
-  const rawValue =
-    props.parser && props.invertedParser
-      ? props.invertedParser(parsedValue)
-      : parsedValue;
-  emit("update:value", rawValue);
-}
-
-function ruler(e) {
-  if (props.rule) {
-    e = e ? e : window.event;
-    if (!props.rule.test(e.key)) {
-      e.preventDefault();
-    } else {
-      return true;
-    }
-  }
-}
-
 function validateField(e) {
   let showValidation = false;
   let inputValue = e.target.value;
-  const parsedValue = props.parser ? props.parser(inputValue) : inputValue;
-  const rawValue =
-    props.parser && props.invertedParser
-      ? props.invertedParser(parsedValue)
-      : parsedValue;
   if (props.validator) {
     e = e ? e : window.event;
     inputValue = e.target.value;
@@ -135,10 +91,10 @@ function validateField(e) {
   } else {
     showValidation =
       props.required &&
-      (rawValue === "" || rawValue === null || rawValue === undefined);
+      (inputValue === "" || inputValue === null || inputValue === undefined);
   }
   emit("update:showValidation", showValidation);
-  emitNewVal(inputValue);
+  emit("update:value", inputValue);
 }
 </script>
 <style scoped lang="scss">

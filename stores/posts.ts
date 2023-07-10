@@ -15,6 +15,8 @@ export const usePostsStore = defineStore("posts", () => {
     email: null,
     title: null,
     body: null,
+    user: {},
+    user_id: null,
   });
 
   const error = ref({
@@ -22,6 +24,8 @@ export const usePostsStore = defineStore("posts", () => {
     email: "",
     title: "",
     body: "",
+    user: "",
+    user_id: "",
   });
 
   const validationForm = reactive({
@@ -29,17 +33,16 @@ export const usePostsStore = defineStore("posts", () => {
     email: false,
     title: false,
     body: false,
+    user: false,
+    user_id: false,
   });
 
   async function getPosts() {
     return $interceptor.get(`posts?page=${pagination.value.page}&per_page=${pagination.value.limit}`).then((result: any) => {
-      data.value = [...data.value, ...result.data];
-      pagination.value = result.meta.pagination;
-      if (pagination.value.page < pagination.value.pages) {
-        pagination.value.page += 1;
-      }
+      data.value = [...data.value, ...result];
+      pagination.value.page += 1;
     }).catch((error: any) => {
-      errorStore.setError(error.data);
+      errorStore.setError({ ...error, ...error.data });
     })
   }
 
@@ -47,10 +50,10 @@ export const usePostsStore = defineStore("posts", () => {
     const users = useUsersStore();
 
     return $interceptor.get(`posts/${id}`).then((result: any) => {
-      datum.value = result.data;
-      users.getUser(result.data.user_id);
+      datum.value = result;
+      users.getUser(result.user_id);
     }).catch((error: any) => {
-      errorStore.setError(error.data);
+      errorStore.setError({ ...error, ...error.data });
     })
   }
 
@@ -58,7 +61,7 @@ export const usePostsStore = defineStore("posts", () => {
     Object.keys(form.value).map((key: any) => {
       if (
         (form.value[key as keyof typeof form.value] === "" || form.value[key as keyof typeof form.value] === null || !form.value[key as keyof typeof form.value]) &&
-        (key == "name" || key == "email" || key == "title" || key == "body")
+        (key == "name" || key == "email" || key == "title" || key == "body" || key == "user_id")
       ) {
         error.value[key as keyof typeof form.value] = $error_message.required;
         validationForm[key as keyof typeof form.value] = true;
@@ -72,19 +75,14 @@ export const usePostsStore = defineStore("posts", () => {
   })
 
   function setPost() {
-    if(!validationChecker.value) return;
+    if (!validationChecker.value) return;
     $interceptor.post(`posts`, form.value).then(() => {
       data.value = [];
       pagination.value.page = 1;
       getPosts();
+      errorStore.setSuccess(true);
     }).catch((error: any) => {
-      errorStore.setError(error.data);
-    })
-  }
-
-  function resetForm() {
-    Object.keys(form.value).map((key) => {
-      form.value[key as keyof typeof form.value] = null;
+      errorStore.setError({ ...error, ...error.data });
     })
   }
 

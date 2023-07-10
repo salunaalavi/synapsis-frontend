@@ -1,9 +1,9 @@
 <template>
-  <article>
+  <article class="comment-create">
     <GenericInput
       v-model:value="comments.form.name"
       v-model:show-validation="comments.validationForm.name"
-      x-class="w-full"
+      custom-class="w-full"
       label="Name"
       placeholder="Subadra Subadri"
       :error-message="comments.error.name"
@@ -13,9 +13,9 @@
     <GenericInput
       v-model:value="comments.form.email"
       v-model:show-validation="comments.validationForm.email"
-      x-class="w-full"
+      custom-class="w-full"
       label="Email"
-      placeholder="Subadra Subadri"
+      placeholder="subadra@subadri.com"
       :error-message="comments.error.email"
       :required="true"
       :validator="$ruler.email"

@@ -1,36 +1,13 @@
-@mixin h1-title {
-  font-size: 2em;
-  font-weight: $bold;
-  text-decoration: none;
+@mixin link-primary {
+  text-decoration: underline;
+  color: $primary;
 }
 
-@mixin h2-title {
-  font-size: 20px;
-  font-weight: $regular;
-  line-height: 130%;
-  letter-spacing: 0.005em;
+@mixin link-tertiary {
+  text-decoration: underline;
+  color: $tertiary;
 }
 
-@mixin h1-regular {
-  font-size: 1.2em;
-  font-weight: $light;
-  line-height: 130%;
-  letter-spacing: 0.005em;
-}
-
-@mixin h3-regular {
-  font-size: 16px;
-  font-weight: $light;
-  line-height: 130%;
-  letter-spacing: 0.005em;
-}
-
-@mixin p-regular {
-  font-size: 14px;
-  font-weight: $light;
-  line-height: 140%;
-  letter-spacing: 0.005em;
-}
 
 @mixin flex-all-center {
   display: flex;

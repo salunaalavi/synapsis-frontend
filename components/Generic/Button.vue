@@ -19,34 +19,37 @@ button {
   padding: $spacer-1 $spacer-2;
   border-radius: $spacer-1;
   transition: 0.5s;
-  @include p-regular;
+  font-size: calc(12px + 0.390625vw);
+  box-sizing: border-box;
   &.primary {
     background-color: $primary;
     color: white;
     &:hover {
-      background-color: $primary;
+      background-color: $secondary;
     }
   }
   &.secondary {
     background-color: $secondary;
+    border: 1px solid $secondary;
     color: white;
     &:hover {
-      background-color: $primary;
+      color: $secondary;
+      background-color: $tertiary;
     }
   }
   &.tertiary {
     background-color: $tertiary;
-    color: black;
+    color: $primary;
     &:hover {
       background-color: $primary;
     }
   }
-  &.white {
-    background-color: white;
-    border: rgb(0, 0, 0, 0.3) solid 1px;
-    color: black;
+  &.error {
+    background-color: $tertiary;
+    color: red;
     &:hover {
-      background-color: $primary;
+      background-color: red;
+      color: white;
     }
   }
 }

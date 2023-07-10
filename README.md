@@ -1,10 +1,16 @@
-# Nuxt 3 Minimal Starter
-
-Look at the [Nuxt 3 documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.
+# Synapsis Technical Test
 
 ## Setup
 
-Make sure to install the dependencies:
+Clone isi file .env.example dan repopulate token gorest:
+
+```bash
+# npm
+NUXT_APP_GOREST_API="https://gorest.co.in/public/v2/"
+NUXT_APP_GOREST_TOKEN=""
+```
+
+Install dependencies:
 
 ```bash
 # npm
@@ -19,7 +25,7 @@ yarn install
 
 ## Development Server
 
-Start the development server on `http://localhost:3000`:
+Start development server di `http://localhost:3000`:
 
 ```bash
 # npm
@@ -34,7 +40,7 @@ yarn dev
 
 ## Production
 
-Build the application for production:
+Build production:
 
 ```bash
 # npm
@@ -47,7 +53,7 @@ pnpm run build
 yarn build
 ```
 
-Locally preview production build:
+Build local preview production:
 
 ```bash
 # npm
