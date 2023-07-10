@@ -76,7 +76,7 @@ export const usePostsStore = defineStore("posts", () => {
 
   function setPost() {
     if (!validationChecker.value) return;
-    $interceptor.post(`posts`, form.value).then(() => {
+    $interceptor.post(`posts`, { ...form.value, user: { name: form.value.name } }).then(() => {
       data.value = [];
       pagination.value.page = 1;
       getPosts();
