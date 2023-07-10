@@ -1,0 +1,72 @@
+&__header {
+  width: 100%;
+  background-color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: top 0.5s;
+  padding: $spacer-1 $spacer-3;
+  box-shadow: rgb(38, 57, 77) 0 $spacer-1 $spacer-2 calc($spacer-1 * -1);
+
+  &--logo {
+    max-width: 100px;
+  }
+
+  &--nav {
+    display: flex;
+    gap: $spacer-1;
+    a {
+      padding: $spacer-1 $spacer-2;
+      border-radius: $spacer-1;
+      transition: 0.5s;
+      @include p-regular;
+      background-color: $primary;
+    }
+
+    &.mobile {
+      & button {
+        & svg {
+          height: 14px;
+        }
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: $spacer-1;
+      }
+    }
+  }
+
+  &--aside {
+    max-width: 200px;
+    display: flex;
+    flex-direction: column;
+    gap: $spacer-1;
+    padding-top: $spacer-3;
+
+    a {
+      padding: $spacer-1 $spacer-2;
+      border-radius: $spacer-1;
+      transition: 0.5s;
+      @include p-regular;
+      background-color: $primary;
+    }
+  }
+
+  @media screen and (max-width: 768px) {
+    &--nav:not(.mobile) {
+      display: none;
+    }
+  }
+  @media screen and (min-width: 769px) {
+    &--nav.mobile {
+      display: none;
+    }
+  }
+}
+
+@media screen and (max-width: 768px) {
+  &__header {
+    justify-content: flex-end;
+    padding: $spacer-1;
+  }
+}

@@ -1,0 +1,28 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap");
+
+* {
+  font-family: "Inter", sans-serif;
+
+  *::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+  *::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  *::-webkit-scrollbar-thumb {
+    background: #e0e0e0;
+    border-radius: 4px;
+    width: 8px;
+    height: 8px;
+    &:hover {
+      background: #ddd;
+    }
+  }
+}
+
+@import "libs/variables";
+@import "libs/mixins";
+@import "layouts/main";
+@import "pages/posts";
+@import "pages/users";

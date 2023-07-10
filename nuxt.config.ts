@@ -2,13 +2,14 @@
 export default defineNuxtConfig({
   css: ["@/assets/css/tailwind.css", "@/assets/scss/main.scss"],
   modules: [
-    '@nuxtjs/tailwindcss',
+    "@nuxtjs/tailwindcss",
     [
       "@pinia/nuxt",
       {
         autoImports: ["defineStore", "acceptHMRUpdate"],
       },
     ],
+    "nuxt-icon",
   ],
   imports: {
     dirs: ["stores", "locales"],
@@ -19,6 +20,7 @@ export default defineNuxtConfig({
   runtimeConfig: {
     app: {
       gorestApi: "",
+      gorestToken: "",
     },
     public: {
       apiBase: "",
