@@ -1,7 +1,7 @@
 <template>
   <div
     class="flex flex-col w-full"
-    :class="[`md:${width}`]"
+    :class="[`${customClass}`]"
     v-bind="null"
   >
     <label v-if="label" class="mb-1">
@@ -16,11 +16,10 @@
     <textarea
       v-bind="$attrs"
       :value="viewValue"
-      :class="[`${showValidation ? 'warning' : ''}`, `${customClass}`]"
+      :class="[`${showValidation ? 'warning' : ''}`]"
       :placeholder="placeholder"
       class="rounded-md"
       @input="validateField($event)"
-      @keypress="ruler($event)"
     />
     <p
       v-if="showValidation"
@@ -42,10 +41,6 @@ const props = defineProps({
     type: [String, Number, Object, Array],
     default: "",
   },
-  width: {
-    type: String,
-    default: "w-1/2",
-  },
   label: {
     type: String,
     default: "",
@@ -65,20 +60,8 @@ const props = defineProps({
     type: String,
     default: "",
   },
-  parser: {
-    type: Function,
-    default: null,
-  },
-  invertedParser: {
-    type: Function,
-    default: null,
-  },
   validator: {
     type: [RegExp, null, Array],
-    default: null,
-  },
-  rule: {
-    type: [RegExp, null],
     default: null,
   },
   showValidation: {
@@ -87,47 +70,18 @@ const props = defineProps({
   },
   customClass: {
     type: String,
-    default: '',
-    required: false,
+    default: "",
   }
 });
 const emit = defineEmits(["update:value", "update:showValidation"]);
 
 const viewValue = computed(() => {
-  if (props.parser && props.value && props.value !== "") {
-    return props.parser(props.value);
-  }
   return props.value;
 });
-
-function emitNewVal(val) {
-  const parsedValue = props.parser ? props.parser(val) : val;
-  const rawValue =
-    props.parser && props.invertedParser
-      ? props.invertedParser(parsedValue)
-      : parsedValue;
-  emit("update:value", rawValue);
-}
-
-function ruler(e) {
-  if (props.rule) {
-    e = e ? e : window.event;
-    if (!props.rule.test(e.key)) {
-      e.preventDefault();
-    } else {
-      return true;
-    }
-  }
-}
 
 function validateField(e) {
   let showValidation = false;
   let inputValue = e.target.value;
-  const parsedValue = props.parser ? props.parser(inputValue) : inputValue;
-  const rawValue =
-    props.parser && props.invertedParser
-      ? props.invertedParser(parsedValue)
-      : parsedValue;
   if (props.validator) {
     e = e ? e : window.event;
     inputValue = e.target.value;
@@ -149,10 +103,10 @@ function validateField(e) {
   } else {
     showValidation =
       props.required &&
-      (rawValue === "" || rawValue === null || rawValue === undefined);
+      (inputValue === "" || inputValue === null || inputValue === undefined);
   }
   emit("update:showValidation", showValidation);
-  emitNewVal(inputValue);
+  emit("update:value", inputValue);
 }
 </script>
 

@@ -1,0 +1,22 @@
+.user-delete {
+  display: flex;
+  gap: $spacer-2;
+  flex-direction: column;
+
+  &__view {
+    padding: $spacer-2;
+    width: 100%;
+    border: 1px solid red;
+    border-radius: $spacer-2;
+  }
+
+  &__body {
+    text-align: center;
+    color: red;
+  }
+
+  &__button {
+    width: fit-content;
+    align-self: flex-end;
+  }
+}

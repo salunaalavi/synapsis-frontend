@@ -6,20 +6,27 @@
           v-model:value="keyword"
           label="Search User"
           placeholder="Use prefix '@' to search by email"
-          @update:value="(e) => $debounce(searchUser(e))"
         />
-        <GenericButton class="flex justify-center gap-2 items-center" color="secondary" @click="searchUser(keyword)">
+        <GenericButton
+          class="flex justify-center gap-2 items-center"
+          color="secondary"
+          @click="searchUser(keyword)"
+        >
           <Icon name="carbon:search" size="20" />Search User</GenericButton
         >
       </div>
-      <GenericButton class="flex justify-center gap-2 items-center" @click="openModal">
-          <Icon name="ph:plus-bold" size="20" />Add User</GenericButton
-        >
+      <GenericButton
+        class="flex justify-center gap-2 items-center"
+        @click="openModal"
+      >
+        <Icon name="ph:plus-bold" size="20" />Add User</GenericButton
+      >
     </aside>
     <section class="users__content">
       <template v-for="(user, index) in users.data" :key="index">
         <UserCard :user="user" />
       </template>
+      <p v-if="users.data.length === 0" class="text-center">No Data...</p>
       <GenericObserver
         v-if="!onSearch"
         class="pb-1"
@@ -32,14 +39,12 @@
       :is-full-height="modalData.isFullheight"
       :width="modalData.width"
       :max-width="modalData.maxWidth"
-      @update:is-open="isActive = false"
     >
       <UserCreate />
     </GenericModal>
   </main>
 </template>
 <script setup>
-const { $debounce } = useNuxtApp();
 const users = useUsersStore();
 const onSearch = ref(false);
 const keyword = ref("");
@@ -63,4 +68,8 @@ async function searchUser(value) {
   await users.getUsers();
   if (users.data.length > 0) onSearch.value = false;
 }
+
+onBeforeRouteLeave(() => {
+  users.onEdit = false;
+});
 </script>

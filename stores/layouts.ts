@@ -1,5 +1,5 @@
 export const useLayoutsStore = defineStore("layouts", () => {
-  const loading = ref(false);
+  const loading = ref(true);
 
   function setLoading(value: boolean) {
     loading.value = value;

@@ -5,7 +5,6 @@ export const useUsersStore = defineStore("users", () => {
   const data = ref<any[]>([]);
   const datum = ref(null);
   const keyword = ref("");
-  const onEdit = ref(false);
   const pagination = ref({
     page: 1,
     limit: 10,
@@ -35,21 +34,18 @@ export const useUsersStore = defineStore("users", () => {
 
   async function getUsers() {
     return $interceptor.get(`users?page=${pagination.value.page}&per_page=${pagination.value.limit}${keyword.value !== "" && keyword.value.charAt(0) != "@" ? "&name=" + keyword.value : keyword.value.charAt(0) === "@" && keyword.value.substring(1) !== "" ? "&email=" + keyword.value.substring(1) : ""}`, { disableLoader: keyword.value !== "", }).then((result: any) => {
-      data.value = [...data.value, ...result.data];
-      pagination.value = result.meta.pagination;
-      if (pagination.value.page < pagination.value.pages) {
-        pagination.value.page += 1;
-      }
+      data.value = [...data.value, ...result];
+      pagination.value.page += 1;
     }).catch((error: any) => {
-      errorStore.setError(error.data);
+      errorStore.setError({ ...error, ...error.data });
     })
   }
 
   async function getUser(id: number) {
     return $interceptor.get(`users/${id}`).then((result: any) => {
-      datum.value = result.data;
+      datum.value = result;
     }).catch((error: any) => {
-      errorStore.setError(error.data);
+      errorStore.setError({ ...error, ...error.data });
     })
   }
 
@@ -77,13 +73,14 @@ export const useUsersStore = defineStore("users", () => {
   })
 
   function setUser() {
-    if(!validationChecker.value) return;
+    if (!validationChecker.value) return;
     $interceptor.post(`users`, form.value).then(() => {
       data.value = [];
       pagination.value.page = 1;
       getUsers();
+      errorStore.setSuccess(true);
     }).catch((error: any) => {
-      errorStore.setError(error.data);
+      errorStore.setError({ ...error, ...error.data });
     })
   }
 
@@ -101,24 +98,26 @@ export const useUsersStore = defineStore("users", () => {
   }
 
   function editUser(id: number) {
-    if(!validationChecker.value) return;
+    if (!validationChecker.value) return;
     $interceptor.put(`users/${id}`, form.value).then(() => {
       data.value = [];
       pagination.value.page = 1;
       getUsers();
       resetForm();
+      errorStore.setSuccess(true);
     }).catch((error: any) => {
-      errorStore.setError(error.data);
+      errorStore.setError({ ...error, ...error.data });
     })
   }
 
-  function deleteUser(id: number) {
-    $interceptor.delete(`users/${id}`).then(() => {
+  async function deleteUser(id: number) {
+    return $interceptor.delete(`users/${id}`).then(() => {
       data.value = [];
       pagination.value.page = 1;
       getUsers();
+      errorStore.setSuccess(true);
     }).catch((error: any) => {
-      errorStore.setError(error.data);
+      errorStore.setError({ ...error, ...error.data });
     })
   }
 
@@ -128,7 +127,6 @@ export const useUsersStore = defineStore("users", () => {
     form,
     error,
     validationForm,
-    onEdit,
     getUsers,
     getUser,
     searchUser,

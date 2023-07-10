@@ -21,8 +21,46 @@
   }
 }
 
+h1 {
+  font-size: calc(26px + 0.390625vw);
+}
+
+h2 {
+  font-size: calc(22px + 0.390625vw);
+}
+
+h3 {
+  font-size: calc(18px + 0.390625vw);
+}
+
+h4 {
+  font-size: calc(15px + 0.390625vw);
+}
+
+h5 {
+  font-size: calc(13px + 0.390625vw);
+}
+
+p {
+  font-size: calc(11px + 0.390625vw);
+}
+
+a {
+  font-size: calc(11px + 0.390625vw);
+}
+
+label {
+  font-size: calc(11px + 0.390625vw);
+}
+
 @import "libs/variables";
 @import "libs/mixins";
 @import "layouts/main";
 @import "pages/posts";
 @import "pages/users";
+@import "components/post/card";
+@import "components/post/create";
+@import "components/comment/card";
+@import "components/comment/create";
+@import "components/user/card";
+@import "components/user/delete";

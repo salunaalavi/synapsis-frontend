@@ -5,7 +5,8 @@
   justify-content: center;
   align-items: center;
   transition: top 0.5s;
-  padding: $spacer-1 $spacer-3;
+  padding: $spacer-2 calc($spacer-5 + 8px);
+  z-index: 1;
   box-shadow: rgb(38, 57, 77) 0 $spacer-1 $spacer-2 calc($spacer-1 * -1);
 
   &--logo {
@@ -14,13 +15,22 @@
 
   &--nav {
     display: flex;
-    gap: $spacer-1;
-    a {
-      padding: $spacer-1 $spacer-2;
+    gap: $spacer-4;
+
+    & a {
+      font-size: calc(10px + 0.390625vw);
+      font-weight: $regular;
+      color: $primary;
+      padding: $spacer-1;
       border-radius: $spacer-1;
-      transition: 0.5s;
-      @include p-regular;
-      background-color: $primary;
+
+      &:hover {
+        background-color: $tertiary;
+      }
+    }
+
+    .router-link-active {
+      font-weight: $bold;
     }
 
     &.mobile {
@@ -41,14 +51,21 @@
     display: flex;
     flex-direction: column;
     gap: $spacer-1;
-    padding-top: $spacer-3;
 
-    a {
-      padding: $spacer-1 $spacer-2;
+    & a {
+      font-size: calc(10px + 0.390625vw);
+      font-weight: $regular;
+      color: $primary;
+      padding: $spacer-1;
       border-radius: $spacer-1;
-      transition: 0.5s;
-      @include p-regular;
-      background-color: $primary;
+
+      &:hover {
+        background-color: $tertiary;
+      }
+    }
+
+    .router-link-active {
+      font-weight: $bold;
     }
   }
 
@@ -67,6 +84,5 @@
 @media screen and (max-width: 768px) {
   &__header {
     justify-content: flex-end;
-    padding: $spacer-1;
   }
 }

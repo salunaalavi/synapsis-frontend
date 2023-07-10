@@ -1,21 +1,33 @@
 <template>
-  <article class="pb-2">
-    <GenericInput
-      v-model:value="posts.form.name"
-      v-model:show-validation="posts.validationForm.name"
-      x-class="w-full"
-      label="Name"
-      placeholder="Subadra Subadri"
-      :error-message="posts.error.name"
-      :required="true"
-      :validator="/.+/g"
-    />
+  <article class="post-create">
+    <section class="post-create__multi">
+      <GenericInput
+        v-model:value="posts.form.name"
+        v-model:show-validation="posts.validationForm.name"
+        custom-class="w-2/3"
+        label="Name"
+        placeholder="Subadra Subadri"
+        :error-message="posts.error.name"
+        :required="true"
+        :validator="/.+/g"
+      />
+      <GenericInput
+        v-model:value="posts.form.user_id"
+        v-model:show-validation="posts.validationForm.user_id"
+        custom-class="w-1/3"
+        type="number"
+        label="User ID"
+        :error-message="posts.error.user_id"
+        :required="true"
+        :validator="/.+/g"
+      />
+    </section>
     <GenericInput
       v-model:value="posts.form.email"
       v-model:show-validation="posts.validationForm.email"
-      x-class="w-full"
+      custom-class="w-full"
       label="Email"
-      placeholder="Subadra Subadri"
+      placeholder="subadra@subadri.com"
       :error-message="posts.error.email"
       :required="true"
       :validator="$ruler.email"
@@ -24,7 +36,7 @@
     <GenericInput
       v-model:value="posts.form.title"
       v-model:show-validation="posts.validationForm.title"
-      x-class="w-full"
+      custom-class="w-full"
       label=""
       placeholder="What on Your Mind?"
       :error-message="posts.error.title"
@@ -51,7 +63,7 @@ const posts = usePostsStore();
 
 function check(value) {
   if (value) {
-    posts.error.email = $error_message.format
+    posts.error.email = $error_message.format;
   }
 }
 </script>

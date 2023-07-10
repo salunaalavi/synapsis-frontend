@@ -31,13 +31,10 @@ export const useCommentsStore = defineStore("comments", () => {
     const posts = usePostsStore();
     posts.getPost(id);
     return $interceptor.get(`posts/${id}/comments?page=${pagination.value.page}&per_page=${pagination.value.limit}`).then((result: any) => {
-      data.value = [...data.value, ...result.data];
-      pagination.value = result.meta.pagination;
-      if (pagination.value.page < pagination.value.pages) {
-        pagination.value.page += 1;
-      }
+      data.value = [...data.value, ...result];
+      pagination.value.page += 1;
     }).catch((error: any) => {
-      errorStore.setError(error.data);
+      errorStore.setError({ ...error, ...error.data });
     })
   }
 
@@ -59,14 +56,20 @@ export const useCommentsStore = defineStore("comments", () => {
   })
 
   function setComment(id: number) {
-    if(!validationChecker.value) return;
+    if (!validationChecker.value) return;
     $interceptor.post(`posts/${id}/comments`, form.value).then(() => {
       data.value = [];
       pagination.value.page = 1;
       getCommentsByPostId(id);
+      errorStore.setSuccess(true);
     }).catch((error: any) => {
-      errorStore.setError(error.data);
+      errorStore.setError({ ...error, ...error.data });
     })
+  }
+
+  function resetPagination() {
+    data.value = [];
+    pagination.value.page = 1;
   }
 
   return {
@@ -76,5 +79,6 @@ export const useCommentsStore = defineStore("comments", () => {
     validationForm,
     getCommentsByPostId,
     setComment,
+    resetPagination,
   }
 })

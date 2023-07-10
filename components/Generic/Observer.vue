@@ -1,5 +1,5 @@
 <template>
-  <div ref="targetObserver" />
+  <div ref="targetObserver" class="z-51" />
 </template>
 <script setup>
 const emit = defineEmits(["intersect"]);

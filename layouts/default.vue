@@ -5,23 +5,46 @@
     <slot />
   </div>
   <GenericModal
-    v-model:is-open="modalData.isOpen"
-    :content-position="modalData.contentPosition"
-    :is-full-height="modalData.isFullheight"
-    :width="modalData.width"
-    :max-width="modalData.maxWidth"
+    v-model:is-open="errorModal.isOpen"
+    :content-position="errorModal.contentPosition"
+    :is-full-height="errorModal.isFullheight"
+    :width="errorModal.width"
+    :max-width="errorModal.maxWidth"
     @update:is-open="closeError"
   >
-    <GenericError>
-      {{ error.data?.data.message }}
+    <GenericError :name="errorStore.error?.name">
+      <template v-for="(error, index) in errorStore.error" :key="index">
+        <p class="pt-2">
+          {{ error.field }} {{ error.message }}
+        </p>
+      </template>
+      {{ errorStore.error?.message }}
     </GenericError>
+  </GenericModal>
+  <GenericModal
+    v-model:is-open="successModal.isOpen"
+    :content-position="successModal.contentPosition"
+    :is-full-height="successModal.isFullheight"
+    :width="successModal.width"
+    :max-width="successModal.maxWidth"
+    @update:is-open="closeSuccess"
+  >
+    <GenericSuccess> Success </GenericSuccess>
   </GenericModal>
 </template>
 <script setup>
 const layouts = useLayoutsStore();
-const error = useErrorStore();
+const errorStore = useErrorStore();
 
-const modalData = reactive({
+const errorModal = reactive({
+  isOpen: false,
+  contentPosition: "center",
+  isFullheight: false,
+  width: 400,
+  maxWidth: 600,
+});
+
+const successModal = reactive({
   isOpen: false,
   contentPosition: "center",
   isFullheight: false,
@@ -31,18 +54,36 @@ const modalData = reactive({
 
 function closeError(value) {
   if (!value) {
-    error.setError(null);
+    errorStore.setError(null);
   }
-  modalData.isOpen = value;
+  errorModal.isOpen = value;
+}
+
+function closeSuccess(value) {
+  if (!value) {
+    errorStore.setSuccess(false);
+  }
+  successModal.isOpen = value;
 }
 
 watch(
-  () => error.data,
+  () => errorStore.error,
   (value) => {
     if (value) {
-      modalData.isOpen = true;
+      errorModal.isOpen = true;
     } else {
-      modalData.isOpen = false;
+      errorModal.isOpen = false;
+    }
+  }
+);
+
+watch(
+  () => errorStore.success,
+  (value) => {
+    if (value) {
+      successModal.isOpen = true;
+    } else {
+      successModal.isOpen = false;
     }
   }
 );
